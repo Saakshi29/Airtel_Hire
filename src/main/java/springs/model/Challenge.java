@@ -15,6 +15,24 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Challenge {
 	
+	public Challenge()
+	{}
+	
+		public Challenge(String cname, String startDate, String endDate, String startTime, String endTime,
+	  String type,String aboutChallenge, String prizes, String faqs,
+			String guidelines) {
+		this.cname = cname;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		
+		this.type = type;
+		this.aboutChallenge = aboutChallenge;
+		this.prizes = prizes;
+		this.faqs = faqs;
+		this.guidelines = guidelines;
+	}
 		@Id
 		@GeneratedValue(strategy=GenerationType.AUTO)
 		private Long cid;

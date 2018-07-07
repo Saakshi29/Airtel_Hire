@@ -31,8 +31,6 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-
-	
 	
 	private String password;
 	private String uname;
@@ -43,8 +41,29 @@ public class Employee {
 	private String degree;
 	private String specialization;
 	private String year;
+	private String type;
+    public Employee(){}
+	
+	public Employee(String collegename, String resume, String phone_number, String degree, String specialization,
+			String year) {
+		
+		this.collegename = collegename;
+		this.resume = resume;
+		this.phone_number = phone_number;
+		this.degree = degree;
+		this.specialization = specialization;
+		this.year = year;
+	}
 
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public Long getId() {
 	return id;
 	}

@@ -2,7 +2,17 @@ package springs.model;
 
 public class Response {
 Long id;
+String type;
 String status;
+
+
+
+public String getType() {
+	return type;
+}
+public void setType(String type) {
+	this.type = type;
+}
 public Long getId() {
 	return id;
 }

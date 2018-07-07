@@ -22,4 +22,8 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long>{
 	/*@Query("Select c.cname from Employee e,Challenge c where e.id=:id and c.cid=:id")	
 	public List<Integer> fin(@Param("id") int id);*/
 	
+	@Query("Select e.type from Employee e where e.id=:id")	
+	public String findType(@Param("id") Long id);
+	
+	
 }

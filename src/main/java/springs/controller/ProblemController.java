@@ -33,10 +33,10 @@ ProblemDAO problemDAO;
 	@PostMapping("/problems")
 	public ResponseEntity<status> createProblem(@Valid @RequestBody Problem p)
 	{
-		problemDAO.save(p);
-		status s=new status();
-		s.setStatus("success");
-		 return ResponseEntity.ok().body(s);}
+	problemDAO.save(p);
+	status s=new status();
+	s.setStatus("success");
+	return ResponseEntity.ok().body(s);}
 
 	@GetMapping("/problems")
 	public List<Problem> getAllProblems()

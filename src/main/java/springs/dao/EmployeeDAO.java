@@ -19,6 +19,11 @@ public class EmployeeDAO {
 		return employeeRepository.find(username,password);
 			
 	}
+	
+	public String findType(Long id)
+	{
+		return employeeRepository.findType(id);
+	}
 	//save
 	public Employee save(Employee emp)
 	{
@@ -36,6 +41,10 @@ public class EmployeeDAO {
 	{
 	return employeeRepository.findAll();
 	}
+	
+	
+
+	
 	
 	//get
 	public Employee findOne(Long empid){

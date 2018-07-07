@@ -25,8 +25,25 @@ public class Score {
 	private Long pid;
 	private Long cid;
 	private Long id;
+	private Long questionnaireid;
+	private Long qid;
+	
+	
 	private Long score;
+	
 
+	public Long getQuestionnaireid() {
+		return questionnaireid;
+	}
+	public void setQuestionnaireid(Long questionnaireid) {
+		this.questionnaireid = questionnaireid;
+	}
+	public Long getQid() {
+		return qid;
+	}
+	public void setQid(Long qid) {
+		this.qid = qid;
+	}
 	public Long getSid() {
 		return sid;
 	}
