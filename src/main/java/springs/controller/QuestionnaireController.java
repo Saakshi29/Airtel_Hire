@@ -15,15 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import springs.dao.EmployeeDAO;
+import springs.dao.MainQuestionnaireDAO;
 import springs.dao.QuestionnaireDAO;
-import springs.dao.RequestQuestionnaire;
+import springs.model.RequestQuestionnaire;
 import springs.dao.SubmissionDAO;
+import springs.model.MainQuestionnaire;
 import springs.model.Questionnaire;
 import springs.model.status;
 
 @RestController
 public class QuestionnaireController {
-public static Long countt=(long)18;
+//public static Long countt=(long)18;
 	@Autowired
 	QuestionnaireDAO questionnaireDAO;
 	
@@ -33,15 +35,23 @@ public static Long countt=(long)18;
 	@Autowired
 	SubmissionDAO submissionDAO;
 	
-	
+	@Autowired
+	MainQuestionnaireDAO mainQuestionnaireDAO;
 	
 	
 	List<String>op=new ArrayList<String>();
 	@PostMapping("/questionnaires")
 	public ResponseEntity<status> putQuestionnaire(@RequestParam("qname")String qname,@RequestBody ArrayList<RequestQuestionnaire> arr)
 	{
+		
 		for(int i=0;i<arr.size();i++)
 		{
+			MainQuestionnaire mainQ=new MainQuestionnaire();
+			mainQ.setQname(qname);
+			mainQuestionnaireDAO.save(mainQ);
+			
+			Long questionnaireid=mainQuestionnaireDAO.findId(qname);
+			
 		RequestQuestionnaire q=arr.get(i);
 		//if(q.getOptions()!=null){
 		
@@ -54,7 +64,7 @@ public static Long countt=(long)18;
 		
 		y.append(op.get(op.size()-1));}
 		Questionnaire qnew=new Questionnaire();
-		qnew.setQuestionnaireid(countt);
+		qnew.setQuestionnaireid(questionnaireid);
 		qnew.setQname(qname);
 		qnew.setQstatement(q.getQstatement());
 		qnew.setMarks(q.getMarks());
@@ -71,7 +81,7 @@ public static Long countt=(long)18;
 		
 		status s=new status();
 		s.setStatus("success");
-		countt++;
+		//countt++;
 		return ResponseEntity.ok().body(s);
 		
 	}
@@ -107,32 +117,6 @@ public static Long countt=(long)18;
 		return questionnaireDAO.getAll();
 		
 	}
-	
-	
-	
-	/*@GetMapping("/QuestionnaireSubmissions/{questionnaireid}")
-	public ArrayList<Req_finalscore> sub(@PathVariable("questionnaireid")Long questionnaireid)
-	{
-		ArrayList<Req_finalscore> arr=new ArrayList<Req_finalscore>();
-		ArrayList<Submission> s=submissionDAO.sub(questionnaireid);
-		for(int i=0;i<s.size();i++){
-		Req_finalscore r=new Req_finalscore();
-		System.out.println(s.get(i).getId());
-		System.out.println(employeeDAO.findOne(s.get(i).getId()).getUname());
-		r.setId(s.get(i).getId());
-		r.setUname(employeeDAO.findOne(s.get(i).getId()).getUname());
-		
-		arr.add(r);
-		}
-		
-		return arr;
-	}*/
-	
-	
-	
-	
-	
-	
 	
 	
 }

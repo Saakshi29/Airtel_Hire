@@ -21,6 +21,6 @@ public class EmailServiceImpl{
         message.setSubject(subject); 
         message.setText(text);
         emailSender.send(message);
- System.out.println("message sent");       
+        System.out.println("message sent");       
     }
 }

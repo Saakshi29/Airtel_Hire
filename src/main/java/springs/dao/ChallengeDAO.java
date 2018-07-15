@@ -63,9 +63,7 @@ public class ChallengeDAO {
 		e.printStackTrace();
 	}
 	
-	
-	//String curr=formatter.format(date);
-    x.add(c);}
+	x.add(c);}
 	return x;
 	}
 	
@@ -78,14 +76,9 @@ public class ChallengeDAO {
 	Challenge c=challengeRepository.findOne(cid);
 	String start=c.getStartDate();
 	String end=c.getEndDate();
-	
-	
-	
 	Date star;
-
 	Date en;
-	
-		try {
+	try {
 			en = formatter.parse(end);
 			star=formatter.parse(start);
 			if(date.after(star) && date.before(en)) {

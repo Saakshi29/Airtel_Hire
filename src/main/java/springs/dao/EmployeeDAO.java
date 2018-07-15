@@ -47,10 +47,6 @@ public class EmployeeDAO {
 	return employeeRepository.findAll();
 	}
 	
-	
-
-	
-	
 	//get
 	public Employee findOne(Long empid){
 	

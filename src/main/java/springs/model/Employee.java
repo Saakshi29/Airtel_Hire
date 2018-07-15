@@ -23,11 +23,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name="users")
 @EntityListeners(AuditingEntityListener.class)
 public class Employee {
-	 /*
-	@ManyToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="id")
-    private List<Score> score;
-	*/
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;

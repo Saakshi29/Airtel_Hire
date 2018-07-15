@@ -1,10 +1,8 @@
-package springs.dao;
+package springs.model;
 
 import java.util.List;
 
 public class RequestQuestionnaire {
-
-	
 	private Long qid;
 	private String type;
 	private String qstatement;
@@ -61,4 +59,6 @@ public class RequestQuestionnaire {
 	
 	
 	
+
+
 }

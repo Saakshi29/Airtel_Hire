@@ -39,50 +39,6 @@ public class EmployeeController {
 	@Autowired
 	StorageService storageService;
 	
-	/*List<String> files = new ArrayList<String>();
-	@PostMapping("/upload")
-	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-		String message = "";
-		try {
-			storageService.store(file);
-			files.add(file.getOriginalFilename());
-			message = "You successfully uploaded" + file.getOriginalFilename() + "!";
-			return ResponseEntity.status(HttpStatus.OK).body(message);
-		} catch (Exception e) {
-			message = "FAIL to upload " + file.getOriginalFilename() + "!";
-			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
-		}
-	} */
-	
-	
-	/*@GetMapping("/file/{filename}")
-	public ResponseEntity<?> getFile(@PathVariable(value="filename") String filename) throws IOException {
-		System.out.println(filename);
-		File file=new File("C:/uploads/"+filename);
-		//String ext=employeeDaO.findtype("C:/uploads/"+filename);
-		//System.out.println(ext);
-		HttpHeaders headers=new HttpHeaders();
-		headers.add("Cache-Control","no-cache,no-store,must-revalidate");
-		headers.add("Pragma","no-cache");
-		headers.add("Expires","0");
-		String contentDispositionHeader="attachment;filename="+filename;
-		headers.add(HttpHeaders.CONTENT_DISPOSITION,contentDispositionHeader);
-		java.nio.file.Path path=Paths.get("C:/uploads/"+filename+".txt");	
-		System.out.println(path);
-		ByteArrayResource resource =new ByteArrayResource(Files.readAllBytes((java.nio.file.Path) path));		
-		
-		return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(org.springframework.http.MediaType.parseMediaType("application/octet-stream")).body(resource);
-         
-    }*/
-
-	
-
-	@GetMapping("/app")
-	public String calling()
-	{
-		return "app";
-	}
-	
 	//save a user
 	@PostMapping("/register")
 	public ResponseEntity<Response> createEmployee(@Valid @RequestBody Employee emp) {

@@ -57,8 +57,6 @@ StorageService storageService;
 		 challengeDAO.save(ch);
 		 String ext= FilenameUtils.getExtension(rootLocation2+file.getOriginalFilename());
 		 storageService.challengeStore(file,ch.getCid(),ext);
-		 //System.out.println("filename:"+file.getOriginalFilename());
-		 //System.out.println("extention:"+ext);
 		 Challenge c= challengeDAO.findOne(ch.getCid());
 		 c.setImg(rootLocation2+"\\ch-"+ch.getCid()+"."+ext);
 		 challengeDAO.save(c);
@@ -114,11 +112,8 @@ StorageService storageService;
 		java.nio.file.Path path=Paths.get(p);	
 		System.out.println(path);
 		ByteArrayResource resource =new ByteArrayResource(Files.readAllBytes((java.nio.file.Path) path));		
-
-//		BufferedImage img=null;
 		return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(org.springframework.http.MediaType.parseMediaType("application/octet-stream")).body(resource);
-	//	img = ImageIO.read(new File("C:/challengeupload/ch-10"));
-	//	return img;
+	
     }
 	
 	

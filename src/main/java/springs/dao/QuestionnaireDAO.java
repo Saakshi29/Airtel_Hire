@@ -37,7 +37,7 @@ public class QuestionnaireDAO {
 		return questionnaireRepository.findMarks(qid);
 	}
 	public String statement(Long qid)
-	{return questionnaireRepository.findStatement(qid);
+	{	return questionnaireRepository.findStatement(qid);
 	}
 	
 	public String findType(Long qid,Long questionnaireid)

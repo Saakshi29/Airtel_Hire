@@ -16,7 +16,7 @@ public class ProblemDAO {
 	
 	public List<Problem> findProblem(Long cid)
 	{
-return problemRepository.findProb(cid);		
+		return problemRepository.findProb(cid);		
 	}
 	//save
 	public Problem save(Problem p)

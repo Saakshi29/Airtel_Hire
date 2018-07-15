@@ -87,6 +87,8 @@ QuestionnaireDAO questionnaireDAO;
 	}	
 	return res;
 	}
+	
+	
 	@GetMapping("/QuestionnaireSubmissions/{questionnaireid}")
 	public List<Response_score> scoreByQid(@PathVariable(value="questionnaireid") Long questionnaireid)
 	{Long v=null;
@@ -187,15 +189,4 @@ QuestionnaireDAO questionnaireDAO;
 	stat.setStatus("success");
 	return ResponseEntity.ok().body(stat);
 	}
-
-	
-    
-    /*
-	@Query(" FROM UserData where userId= :id")
-	public List<UserData> findBySearchTerm(@Param("id") Long id);
-
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="user_id")
-    private UserData userdata
-    */
 }

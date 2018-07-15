@@ -52,7 +52,7 @@ public class AdminController {
 	@PostMapping("/sendmail")
 	public ResponseEntity<status> sendd(@RequestParam("uname")String uname,@RequestParam("emailid")String emailid,@RequestParam("link")String link)
 	{String password=adminDao.generatePassword();
-		emailServiceImpl.sendSimpleMessage(emailid,"Questionnaire for Airtel", "Hey "+uname+","+"\npassword: "+password+"\nLink for Questionnaire: "+link+"\n\n\n\n"+"Regards,\n Airtel Hire");
+	emailServiceImpl.sendSimpleMessage(emailid,"Questionnaire for Airtel", "Hey "+uname+","+"\npassword: "+password+"\nLink for Questionnaire: "+link+"\n\n\n\n"+"Regards,\n Airtel Hire");
 	Employee emp=new Employee();
 	emp.setEmailid(emailid);
 	emp.setPassword(password);

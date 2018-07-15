@@ -48,8 +48,8 @@ public class SubmissionDAO {
 		return submissionRepository.sub(questionnaireid);}
 		
 	
-public String ans(Long id,Long qid)
-{return submissionRepository.ans(id,qid);
+	public String ans(Long id,Long qid)
+	{return submissionRepository.ans(id,qid);
 	}
 }
 

@@ -166,48 +166,5 @@ public class SubmissionController {
 		
 		return ResponseEntity.ok().body(s);
 	}
-	
-	
-	
-	/*@GetMapping("/checkEvaluationStatus/{id}/{questionnaireid}")
-	public ResponseEntity<status> isEvaluated(@Valid @PathVariable("id")Long id,@PathVariable("questionnaireid")Long questionnaireid)
-	{
 		
-		status s=new status();
-		//@RequestBody Score r,
-		//r.getId(),r.getQuestionnaireid()
-			
-			if(y.size()!=0)
-			s.setStatus("success");	
-			else
-			s.setStatus("fail");
-		
-		return ResponseEntity.ok().body(s);
-	}*/
-/*	
-	@PostMapping("/submissions/{id}")
-	public ResponseEntity<status> submit(@PathVariable("id")Long id,@RequestBody ArrayList<Submission> sub)
-	{
-		for(int i=0;i<sub.size();i++)
-		{
-			Submission s=sub.get(i);
-			s.setId(id);
-			submissionDAO.save(s);
-		}
-		status stat=new status();
-		stat.setStatus("success");
-		
-		return ResponseEntity.ok().body(stat);
-	}
-	
-*/
-	
-	@GetMapping("/allAnswers")
-	public ArrayList<Submission> give(@RequestParam("questionnaireid")Long questionnaireid)
-	{ArrayList<Submission> arr=new ArrayList<Submission>();	
-	
-	
-	return arr;
-	}
-	
 }
