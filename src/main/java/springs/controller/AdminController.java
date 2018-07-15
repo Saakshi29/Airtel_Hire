@@ -1,7 +1,9 @@
 package springs.controller;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -11,17 +13,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import springs.dao.AdminDAO;
+import springs.dao.EmailServiceImpl;
 import springs.dao.EmployeeDAO;
 import springs.dao.ScoreDAO;
 import springs.dao.SubmissionDAO;
+import springs.model.Employee;
 import springs.model.Problem;
 import springs.model.Request;
 import springs.model.Response;
 import springs.model.Response_score;
 import springs.model.Submission;
+import springs.model.status;
 
 @RestController
 public class AdminController {
@@ -37,6 +43,30 @@ public class AdminController {
 	
 	@Autowired
 	ScoreDAO scoreDAO;
+	
+	
+	@Autowired
+	EmailServiceImpl emailServiceImpl;
+	
+	
+	@PostMapping("/sendmail")
+	public ResponseEntity<status> sendd(@RequestParam("uname")String uname,@RequestParam("emailid")String emailid,@RequestParam("link")String link)
+	{String password=adminDao.generatePassword();
+		emailServiceImpl.sendSimpleMessage(emailid,"Questionnaire for Airtel", "Hey "+uname+","+"\npassword: "+password+"\nLink for Questionnaire: "+link+"\n\n\n\n"+"Regards,\n Airtel Hire");
+	Employee emp=new Employee();
+	emp.setEmailid(emailid);
+	emp.setPassword(password);
+	emp.setUname(uname);
+	emp.setType("questionnaire");
+	employeeDAO.save(emp);
+		status s=new status();
+		s.setStatus("success");
+		return ResponseEntity.ok().body(s);
+	}
+	
+	
+	
+	
 	
 	@PostMapping("/adminlogin")
 	public ResponseEntity<Response> find(@Valid @RequestBody Request r)

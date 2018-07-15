@@ -27,11 +27,11 @@ public class StorageService {
 	private final Path rootLocation3=Paths.get("C:/resumeupload/");
 	
 
-	public void store(MultipartFile file,Long id,Long pid) {
+	public void store(MultipartFile file,Long id,Long pid,String ext) {
 	
 		try {
-		Files.copy(file.getInputStream(), this.rootLocation.resolve(id+"-"+pid));
-		String ext1 = FilenameUtils.getExtension(rootLocation+id.toString()+"-"+pid);
+		Files.copy(file.getInputStream(), this.rootLocation.resolve(id+"-"+pid+"."+ext));
+		String ext1 = FilenameUtils.getExtension(rootLocation+id.toString()+"-"+pid+"."+ext);
 		//System.out.println(ext1);
 		} catch (Exception e) {
 			throw new RuntimeException("FAIL!");
@@ -39,21 +39,21 @@ public class StorageService {
 	}
 
 
-	public void challengeStore(MultipartFile file,Long cid) {
+	public void challengeStore(MultipartFile file,Long cid,String ext) {
 		
 		try {
-		Files.copy(file.getInputStream(), this.rootLocation2.resolve("ch-"+cid));
-		String ext1 = FilenameUtils.getExtension(rootLocation2+"ch-"+cid);
+		Files.copy(file.getInputStream(), this.rootLocation2.resolve("ch-"+cid+"."+ext));
+		String ext1 = FilenameUtils.getExtension(rootLocation2+"ch-"+cid+"."+ext);
 		//System.out.println(ext1);
 		} catch (Exception e) {
 			throw new RuntimeException("FAIL!");
 		}
 	}
-public void resumeStore(MultipartFile file,Long uid) {
+	public void resumeStore(MultipartFile file,Long uid,String ext) {
 		
 		try {
-		Files.copy(file.getInputStream(), this.rootLocation3.resolve("resume-"+uid));
-		String ext1 = FilenameUtils.getExtension(rootLocation3+"resume-"+uid);
+		Files.copy(file.getInputStream(), this.rootLocation3.resolve("resume-"+uid+"."+ext));
+		String ext1 = FilenameUtils.getExtension(rootLocation3+"resume-"+uid+"."+ext);
 		//System.out.println(ext1);
 		} catch (Exception e) {
 			throw new RuntimeException("FAIL!");

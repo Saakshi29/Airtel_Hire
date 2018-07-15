@@ -29,7 +29,10 @@ public class ChallengeDAO {
 		return challengeRepository.save(c);
 	}
 
-	
+	public String findPath(Long cid)
+	{
+		return challengeRepository.findPath(cid);
+	}
 	public List<Challenge> findAll()
 	{List<Challenge> x=new ArrayList<Challenge>();
      List<Challenge> ch= challengeRepository.findAll();
@@ -37,14 +40,17 @@ public class ChallengeDAO {
 	{ Challenge c=ch.get(i);
 	String start=c.getStartDate();
 	String end=c.getEndDate();
+	String startTime=c.getStartTime();
+	String endTime=c.getEndTime();
 	Date star;
 
 	Date en;
 	try {
 		en = formatter.parse(end);
 		star=formatter.parse(start);
+		
 		if(date.after(star) && date.before(en)) {
-		c.setCategory("live");		
+			c.setCategory("live");		
 		}
 		else if(star.after(date))
 		{c.setCategory("upcoming");}

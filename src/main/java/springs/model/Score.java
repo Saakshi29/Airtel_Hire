@@ -27,8 +27,8 @@ public class Score {
 	private Long id;
 	private Long questionnaireid;
 	private Long qid;
-	
-	
+
+
 	private Long score;
 	
 

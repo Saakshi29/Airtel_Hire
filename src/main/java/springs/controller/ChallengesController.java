@@ -2,14 +2,19 @@ package springs.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 import javax.validation.Valid;
 
 import org.apache.commons.io.FilenameUtils;
@@ -23,18 +28,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.MultipartFilter;
-
-import com.mysql.fabric.Response;
-
 import springs.dao.ChallengeDAO;
-import springs.dao.StorageService;
+import springs.dao.StorageService; 
 import springs.model.Challenge;
-import springs.model.Submission;
 import springs.model.status;
 
 
@@ -56,11 +55,12 @@ StorageService storageService;
 	{
 		Challenge ch=new Challenge(cname,startDate,endDate,startTime,endTime,type,aboutChallenge,prizes,faqs,guidelines);
 		 challengeDAO.save(ch);
-		 storageService.challengeStore(file,ch.getCid());
 		 String ext= FilenameUtils.getExtension(rootLocation2+file.getOriginalFilename());
-		// System.out.println(ext);
+		 storageService.challengeStore(file,ch.getCid(),ext);
+		 //System.out.println("filename:"+file.getOriginalFilename());
+		 //System.out.println("extention:"+ext);
 		 Challenge c= challengeDAO.findOne(ch.getCid());
-		 ch.setImg(rootLocation2+"\\ch-"+ch.getCid());
+		 c.setImg(rootLocation2+"\\ch-"+ch.getCid()+"."+ext);
 		 challengeDAO.save(c);
 		 status s=new status();
 		 s.setStatus("success");
@@ -71,9 +71,38 @@ StorageService storageService;
 	
 	@GetMapping("/img/{cid}")
 	public ResponseEntity<?> getFile(@PathVariable(value="cid")Long cid)throws IOException {
+	
+		String p=challengeDAO.findPath(cid);
 		String filename="ch-"+cid.toString();
 		System.out.println(filename);
-		File file=new File("C:/challengeupload/"+filename);
+		File file=new File(p);
+		
+		//Compression of image
+		/*
+		BufferedImage image = ImageIO.read(file);
+
+        File output = new File("C:/challengeupload/"+filenameCom);
+        OutputStream out = new FileOutputStream(output);
+
+        ImageWriter writer =  ImageIO.getImageWritersByFormatName("jpg").next();
+        ImageOutputStream ios = ImageIO.createImageOutputStream(out);
+        writer.setOutput(ios);
+
+        ImageWriteParam param = writer.getDefaultWriteParam();
+        if (param.canWriteCompressed()){
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality(0.05f);
+        }
+
+        writer.write(null, new IIOImage(image, null, null), param);
+
+        out.close();
+        ios.close();
+        writer.dispose();
+		file=new File("C:/challengeupload/"+"filenameCom);
+		*/
+		
+		
 		//String ext=submissionDAO.findtype("C:/uploads/"+filename);
 		//System.out.println(ext);
 		HttpHeaders headers=new HttpHeaders();
@@ -82,7 +111,7 @@ StorageService storageService;
 		headers.add("Expires","0");
 		String contentDispositionHeader="attachment;filename="+filename;
 		headers.add(HttpHeaders.CONTENT_DISPOSITION,contentDispositionHeader);
-		java.nio.file.Path path=Paths.get("C:/challengeupload/"+filename);	
+		java.nio.file.Path path=Paths.get(p);	
 		System.out.println(path);
 		ByteArrayResource resource =new ByteArrayResource(Files.readAllBytes((java.nio.file.Path) path));		
 

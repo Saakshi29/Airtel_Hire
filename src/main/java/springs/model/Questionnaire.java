@@ -7,12 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 @Entity
 @Table(name="questionnaire")
@@ -26,7 +21,30 @@ public class Questionnaire {
 	private String type;
 	private String qstatement;
 	private String options;
+	private Long marks;
+	private String answer;
+	private String qname;
 	
+	
+	
+	public String getQname() {
+		return qname;
+	}
+	public void setQname(String qname) {
+		this.qname = qname;
+	}
+	public String getAnswer() {
+		return answer;
+	}
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+	public Long getMarks() {
+		return marks;
+	}
+	public void setMarks(Long marks) {
+		this.marks = marks;
+	}
 	public Long getQid() {
 		return qid;
 	}

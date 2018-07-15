@@ -20,6 +20,11 @@ public class EmployeeDAO {
 			
 	}
 	
+	public String findPath(Long id)
+	{
+		return employeeRepository.findPath(id);
+	}
+	
 	public String findType(Long id)
 	{
 		return employeeRepository.findType(id);

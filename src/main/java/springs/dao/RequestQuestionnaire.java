@@ -9,6 +9,29 @@ public class RequestQuestionnaire {
 	private String type;
 	private String qstatement;
 	private List<String> options;
+	private Long marks;
+	private String answer;
+	private String qname;
+	
+	
+	public String getQname() {
+		return qname;
+	}
+	public void setQname(String qname) {
+		this.qname = qname;
+	}
+	public Long getMarks() {
+		return marks;
+	}
+	public void setMarks(Long marks) {
+		this.marks = marks;
+	}
+	public String getAnswer() {
+		return answer;
+	}
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
 	public Long getQid() {
 		return qid;
 	}

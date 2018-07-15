@@ -24,13 +24,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import springs.dao.QuestionnaireDAO;
+import springs.dao.ScoreDAO;
 import springs.dao.StorageService;
 import springs.dao.SubmissionDAO;
 import springs.model.Challenge;
 import springs.model.RequestSubmission;
+import springs.model.Response_score;
 import springs.model.Score;
 import springs.model.Submission;
 import springs.model.status;
+import springs.model.subjectiveRequest;
 
 @RestController
 public class SubmissionController {
@@ -41,22 +45,29 @@ public class SubmissionController {
 	StorageService storageService;
 	
 	@Autowired
+	ScoreDAO scoreDAO;
+	
+	@Autowired
+	QuestionnaireDAO questionnaireDAO;
+	
+	@Autowired
 	SubmissionDAO submissionDAO;
 	
 	@GetMapping("/file/{id}/{pid}")
 	public ResponseEntity<?> getFile(@PathVariable(value="id")Long id,@PathVariable(value="pid")Long pid)throws IOException {
-		String filename=id+"-"+pid;
+		String filename=submissionDAO.findPath(id,pid);
+		//String filename=id+"-"+pid;
 		System.out.println(filename);
-		File file=new File("C:/uploads/"+filename);
-		String ext=submissionDAO.findtype("C:/uploads/"+filename);
-		System.out.println(ext);
+		File file=new File(filename);
+	//	String ext=submissionDAO.findtype("C:/uploads/"+filename);
+		//System.out.println(ext);
 		HttpHeaders headers=new HttpHeaders();
 		headers.add("Cache-Control","no-cache,no-store,must-revalidate");
 		headers.add("Pragma","no-cache");
 		headers.add("Expires","0");
 		String contentDispositionHeader="attachment;filename="+filename;
 		headers.add(HttpHeaders.CONTENT_DISPOSITION,contentDispositionHeader);
-		java.nio.file.Path path=Paths.get("C:/uploads/"+filename);	
+		java.nio.file.Path path=Paths.get(filename);	
 		System.out.println(path);
 		ByteArrayResource resource =new ByteArrayResource(Files.readAllBytes((java.nio.file.Path) path));		
 		
@@ -68,14 +79,15 @@ public class SubmissionController {
 
 	@PostMapping("/submission")
 	public ResponseEntity<status> addSubmission(@Valid @RequestParam("id") Long id,@RequestParam("pid") Long pid, @RequestParam(value="file") MultipartFile file)
-	{    storageService.store(file,id,pid);
-		 String ext= FilenameUtils.getExtension(rootLocation+file.getOriginalFilename());
-		 Submission s=new Submission();
+	{    String ext= FilenameUtils.getExtension(rootLocation+file.getOriginalFilename());
+		storageService.store(file,id,pid,ext);
+	  
+		Submission s=new Submission();
 		 s.setId(id);
 		 s.setType("challenge");
 		 s.setPid(pid);
 		 s.setFtype(ext);
-		 s.setFilename(rootLocation+"\\"+id+"-"+pid);
+		 s.setFilename(rootLocation+"\\"+id+"-"+pid+"."+ext);
 		 submissionDAO.save(s);
 		 status s1=new status();
 		 s1.setStatus("success");
@@ -87,12 +99,38 @@ public class SubmissionController {
 	{	for(int i=0;i<sub.size();i++)
 	{
 		Submission s=new Submission();
+
 		 s.setId(sub.get(i).getId());
 		 s.setQuestionnaireid(sub.get(i).getQuestionnaireid());
 		 s.setQid(sub.get(i).getQid());
 		 s.setAnswer(sub.get(i).getAnswer());
 		 s.setType("questionnaire");
 		 submissionDAO.save(s);
+		 
+		 
+		String x="subjective";
+		String answer=questionnaireDAO.findAnswer(sub.get(i).getQid()); 
+		Long marks=questionnaireDAO.findMarks(sub.get(i).getQid());
+		String type=questionnaireDAO.findType(sub.get(i).getQid(),sub.get(i).getQuestionnaireid());
+		
+		Score score=new Score();
+		if(answer!="")
+		{if(answer.equals(sub.get(i).getAnswer()))
+		{score.setScore(marks);
+		}
+		else
+		{Long h=(long)0;
+		score.setScore(h);
+		}}
+		
+		
+		score.setId(sub.get(i).getId());
+		
+		score.setQid(sub.get(i).getQid());
+		score.setQuestionnaireid(sub.get(i).getQuestionnaireid());
+		
+		 scoreDAO.save(score);
+		 
 	}
 		 status s1=new status();
 		 s1.setStatus("success");
@@ -104,23 +142,72 @@ public class SubmissionController {
 	
 	@PostMapping("/checksubmissionstatus")
 	public ResponseEntity<status> isSubmitted(@Valid @RequestBody Score r)
-	{	status s=new status();
-	if(r.getQid()!=null)
-	{	List<Long> y=submissionDAO.findStatus2(r.getId(),r.getQid());
-		if(y.size()!=0)
-		s.setStatus("success");	
-		else
-		s.setStatus("fail");
-	}
-	if(r.getPid()!=null)
-	{	List<Long> x=submissionDAO.findStatus(r.getId(),r.getPid());
+	{status s=new status();
+		List<Long> x=submissionDAO.findStatus(r.getId(),r.getPid());
 		if(x.size()!=0)
-		s.setStatus("success");	
+		s.setStatus("success");
 		else
 		s.setStatus("fail");
-	}
-	return ResponseEntity.ok().body(s);	
-	}	
 	
-
+	return ResponseEntity.ok().body(s);	
+	}
+	
+	@GetMapping("/checksubmissionstatus/{id}/{questionnaireid}")
+	public ResponseEntity<status> isSubmit(@Valid @PathVariable("id")Long id,@PathVariable("questionnaireid")Long questionnaireid)
+	{
+		status s=new status();
+		//@RequestBody Score r,
+		//r.getId(),r.getQuestionnaireid()
+			List<Long> y=submissionDAO.findStatus2(id,questionnaireid);
+			if(y.size()!=0)
+			s.setStatus("success");	
+			else
+			s.setStatus("fail");
+		
+		return ResponseEntity.ok().body(s);
+	}
+	
+	
+	
+	/*@GetMapping("/checkEvaluationStatus/{id}/{questionnaireid}")
+	public ResponseEntity<status> isEvaluated(@Valid @PathVariable("id")Long id,@PathVariable("questionnaireid")Long questionnaireid)
+	{
+		
+		status s=new status();
+		//@RequestBody Score r,
+		//r.getId(),r.getQuestionnaireid()
+			
+			if(y.size()!=0)
+			s.setStatus("success");	
+			else
+			s.setStatus("fail");
+		
+		return ResponseEntity.ok().body(s);
+	}*/
+/*	
+	@PostMapping("/submissions/{id}")
+	public ResponseEntity<status> submit(@PathVariable("id")Long id,@RequestBody ArrayList<Submission> sub)
+	{
+		for(int i=0;i<sub.size();i++)
+		{
+			Submission s=sub.get(i);
+			s.setId(id);
+			submissionDAO.save(s);
+		}
+		status stat=new status();
+		stat.setStatus("success");
+		
+		return ResponseEntity.ok().body(stat);
+	}
+	
+*/
+	
+	@GetMapping("/allAnswers")
+	public ArrayList<Submission> give(@RequestParam("questionnaireid")Long questionnaireid)
+	{ArrayList<Submission> arr=new ArrayList<Submission>();	
+	
+	
+	return arr;
+	}
+	
 }

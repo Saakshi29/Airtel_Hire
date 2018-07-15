@@ -1,38 +1,44 @@
 package springs.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.JsonObject;
-
+import springs.dao.EmployeeDAO;
 import springs.dao.QuestionnaireDAO;
 import springs.dao.RequestQuestionnaire;
+import springs.dao.SubmissionDAO;
 import springs.model.Questionnaire;
-import springs.model.Response;
 import springs.model.status;
 
 @RestController
 public class QuestionnaireController {
-public static Long count=(long)1;
+public static Long countt=(long)18;
 	@Autowired
 	QuestionnaireDAO questionnaireDAO;
 	
+	@Autowired
+	EmployeeDAO employeeDAO;
+	
+	@Autowired
+	SubmissionDAO submissionDAO;
+	
+	
+	
+	
 	List<String>op=new ArrayList<String>();
 	@PostMapping("/questionnaires")
-	public ResponseEntity<status> putQuestionnaire(@Valid @RequestBody ArrayList<RequestQuestionnaire> arr)
+	public ResponseEntity<status> putQuestionnaire(@RequestParam("qname")String qname,@RequestBody ArrayList<RequestQuestionnaire> arr)
 	{
 		for(int i=0;i<arr.size();i++)
 		{
@@ -48,10 +54,14 @@ public static Long count=(long)1;
 		
 		y.append(op.get(op.size()-1));}
 		Questionnaire qnew=new Questionnaire();
-		qnew.setQid(count);
-		
+		qnew.setQuestionnaireid(countt);
+		qnew.setQname(qname);
 		qnew.setQstatement(q.getQstatement());
+		qnew.setMarks(q.getMarks());
+		qnew.setAnswer(q.getAnswer());
+		
 		qnew.setType(q.getType());
+		
 		if(op!=null)
 		qnew.setOptions(y.toString());
 		questionnaireDAO.save(qnew);
@@ -61,7 +71,7 @@ public static Long count=(long)1;
 		
 		status s=new status();
 		s.setStatus("success");
-		count++;
+		countt++;
 		return ResponseEntity.ok().body(s);
 		
 	}
@@ -91,6 +101,36 @@ public static Long count=(long)1;
 		return res;
 
 	}
+	
+	@GetMapping("/allQuestionnaires")
+	public ArrayList<Questionnaire>getAll(){
+		return questionnaireDAO.getAll();
+		
+	}
+	
+	
+	
+	/*@GetMapping("/QuestionnaireSubmissions/{questionnaireid}")
+	public ArrayList<Req_finalscore> sub(@PathVariable("questionnaireid")Long questionnaireid)
+	{
+		ArrayList<Req_finalscore> arr=new ArrayList<Req_finalscore>();
+		ArrayList<Submission> s=submissionDAO.sub(questionnaireid);
+		for(int i=0;i<s.size();i++){
+		Req_finalscore r=new Req_finalscore();
+		System.out.println(s.get(i).getId());
+		System.out.println(employeeDAO.findOne(s.get(i).getId()).getUname());
+		r.setId(s.get(i).getId());
+		r.setUname(employeeDAO.findOne(s.get(i).getId()).getUname());
+		
+		arr.add(r);
+		}
+		
+		return arr;
+	}*/
+	
+	
+	
+	
 	
 	
 	

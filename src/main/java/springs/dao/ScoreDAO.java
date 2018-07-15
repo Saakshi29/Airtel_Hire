@@ -16,7 +16,10 @@ public class ScoreDAO {
 	@Autowired
 	ScoreRepository scoreRepository;
 
-	
+	public Long findScoree(Long qid,Long id)
+	{
+		return scoreRepository.findScoree(qid,id);
+	}
 	public List<Score> findScore(Long pid)
 	{
      return scoreRepository.findAll(pid);		
@@ -24,7 +27,11 @@ public class ScoreDAO {
 	public Object[] findScoreByCid(Long cid)
 	{
      return scoreRepository.findAllByCid(cid);		
-	}	
+	}
+	public Object[] findScoreByQid(Long questionnaireid)
+	{
+     return scoreRepository.findAllByQid(questionnaireid);		
+	}
 	public Score findScore(Long uid,Long pid)
 	{
 		return  scoreRepository.findparticular(uid,pid);
@@ -36,6 +43,10 @@ public class ScoreDAO {
 	public Score save(Score s)
 	{
 		return scoreRepository.save(s);
+	}
+	public Score findScoreByQid(Long id,Long qid)
+	{
+		return scoreRepository.findScoreByQid(id,qid);
 	}
 
 

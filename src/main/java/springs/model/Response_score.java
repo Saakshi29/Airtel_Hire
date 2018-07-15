@@ -6,6 +6,21 @@ public class Response_score {
 	Long id;
 	String uname;
 	Long score;
+	boolean isfinal;
+	
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public boolean isIsfinal() {
+		return isfinal;
+	}
+	public void setIsfinal(boolean isfinal) {
+		this.isfinal = isfinal;
+	}
 	public Long getUid() {
 		return id;
 	}

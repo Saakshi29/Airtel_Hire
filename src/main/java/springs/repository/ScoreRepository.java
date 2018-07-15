@@ -18,6 +18,8 @@ public interface ScoreRepository extends JpaRepository<Score,Long>{
 	@Query("Select s.id,sum(s.score) from Score s where s.cid=:cid group by s.id")	
 	public Object[] findAllByCid(@Param("cid") Long cid);
 	
+	@Query("Select s.id,sum(s.score) from Score s where s.questionnaireid=:questionnaireid group by s.id")	
+	public Object[] findAllByQid(@Param("questionnaireid") Long questionnaireid);
 	
 	
 	@Query("Select s.score from Score s where s.id=:id and s.pid=:pid")
@@ -25,5 +27,12 @@ public interface ScoreRepository extends JpaRepository<Score,Long>{
 	
 	@Query("Select s from Score s where s.id=:id and s.pid=:pid")
 	public Score findparticular(@Param("id") Long id,@Param("pid")Long pid);
+	
+	
+	@Query("Select s from Score s where s.id=:id and s.qid=:qid")
+	public Score findScoreByQid(@Param("id") Long id,@Param("qid")Long qid);
+	
+	@Query("Select s.score from Score s where s.id=:id and s.qid=:qid")
+	public Long findScoree(@Param("qid")Long qid,@Param("id") Long id);
 	
 }
