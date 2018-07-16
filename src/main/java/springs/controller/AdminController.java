@@ -41,16 +41,22 @@ public class AdminController {
 	@Autowired
 	EmailServiceImpl emailServiceImpl;
 	
+	//	public ResponseEntity<status> sendd(@RequestParam("uname")String uname,@RequestParam("emailid")String emailid,@RequestParam("link")String link)
+
 	@PostMapping("/sendmail")
-	public ResponseEntity<status> sendd(@RequestParam("uname")String uname,@RequestParam("emailid")String emailid,@RequestParam("link")String link)
-	{	String password=adminDao.generatePassword();
-		emailServiceImpl.sendSimpleMessage(emailid,"Questionnaire for Airtel", "Hey "+uname+","+"\npassword: "+password+"\nLink for Questionnaire: "+link+"\n\n\n\n"+"Regards,\n Airtel Hire");
+	public ResponseEntity<status> sendd(@RequestBody ArrayList<String> emailid,@RequestParam("link")String link)
+	{	
+		for(int i=0;i<emailid.size();i++){
+		String password=adminDao.generatePassword();
+		emailServiceImpl.sendSimpleMessage(emailid.get(i),"Questionnaire for Airtel", "Hey user"+","+"\npassword: "+password+"\nLink for Questionnaire: "+link+"\n\n\n\n"+"Regards,\n Airtel Hire");
 		Employee emp=new Employee();
-		emp.setEmailid(emailid);
+		emp.setEmailid(emailid.get(i));
 		emp.setPassword(password);
-		emp.setUname(uname);
+		//emp.setUname(uname);
 		emp.setType("questionnaire");
 		employeeDAO.save(emp);
+		}
+		
 		status s=new status();
 		s.setStatus("success");
 		return ResponseEntity.ok().body(s);

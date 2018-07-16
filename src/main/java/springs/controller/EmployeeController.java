@@ -90,10 +90,12 @@ public class EmployeeController {
 	
 	//@RequestParam(value="collegename",required=false)String collegename,@RequestParam(value="phone_number",required=false)String phone_number,@RequestParam(value="specialization",required=false)String specialization,@RequestParam(value="year",required=false)String year,@RequestParam(value="degree",required=false)String degree,@RequestParam(value="resume",required=false)MultipartFile resume
 	@PostMapping("/update/{id}")
-	public ResponseEntity<Response> updateEmployee(@PathVariable(value="id") Long empid,@RequestParam(value="collegename",required=false)String collegename,@RequestParam(value="phone_number",required=false)String phone_number,@RequestParam(value="specialization",required=false)String specialization,@RequestParam(value="year",required=false)String year,@RequestParam(value="degree",required=false)String degree,@RequestParam(value="resume",required=false)MultipartFile resume)
+	public ResponseEntity<Response> updateEmployee(@PathVariable(value="id") Long empid,@RequestParam(value="uname",required=false)String uname,@RequestParam(value="collegename",required=false)String collegename,@RequestParam(value="phone_number",required=false)String phone_number,@RequestParam(value="specialization",required=false)String specialization,@RequestParam(value="year",required=false)String year,@RequestParam(value="degree",required=false)String degree,@RequestParam(value="resume",required=false)MultipartFile resume)
 		{	Employee emp= employeeDaO.findOne(empid);
 			if(emp==null)
 				return ResponseEntity.notFound().build();
+			if(uname!=null)
+				emp.setUname(uname);
 			if(collegename!=null)
 				emp.setCollegename(collegename);
 			if(phone_number!=null)
@@ -148,5 +150,4 @@ public class EmployeeController {
 		employeeDaO.delete(emp);
 		return ResponseEntity.ok().build();
 	}
-	
 }	

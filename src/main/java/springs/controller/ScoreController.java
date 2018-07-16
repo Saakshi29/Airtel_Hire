@@ -154,7 +154,6 @@ public class ScoreController {
 		fin.setScore(t.getScore());
 		System.out.println(t.getScore());
 		scoreDAO.save(fin);
-	
 	}
 	status s=new status();
 	s.setStatus("success");

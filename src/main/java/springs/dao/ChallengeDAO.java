@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import springs.model.Challenge;
-
+import springs.model.Problem;
 import springs.repository.ChallengeRepository;
 
 
@@ -19,6 +19,9 @@ public class ChallengeDAO {
 	
 	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");  
 	Date date=new Date();
+	
+	@Autowired
+	ProblemDAO problemDAO;
 	
 	@Autowired
 	ChallengeRepository challengeRepository;
@@ -41,16 +44,18 @@ public class ChallengeDAO {
      {  Challenge c=ch.get(i);
      	String start=c.getStartDate();
      	String end=c.getEndDate();
-		//String startTime=c.getStartTime();
+		List<Problem>prob=problemDAO.findProblem(c.getCid());
+     	//String startTime=c.getStartTime();
 		//String endTime=c.getEndTime();
 		Date star;
-
+		
 		Date en;
 		try {
 			en = formatter.parse(end);
 			star=formatter.parse(start);
-			
-			if(date.after(star) && date.before(en)) {
+			if(prob.isEmpty())
+				c.setCategory("upcoming");
+			else if(date.after(star) && date.before(en)) {
 				c.setCategory("live");		
 			}
 			else if(star.after(date))
@@ -71,13 +76,16 @@ public class ChallengeDAO {
 	public Challenge findOne(Long cid){
 		Challenge c=challengeRepository.findOne(cid);
 		String start=c.getStartDate();
+		List<Problem>prob=problemDAO.findProblem(cid);
 		String end=c.getEndDate();
 		Date star;
 		Date en;
 		try {
 				en = formatter.parse(end);
 				star=formatter.parse(start);
-				if(date.after(star) && date.before(en)) {
+				if(prob.size()==0)
+					c.setCategory("upcoming");
+				else if(date.after(star) && date.before(en)) {
 				c.setCategory("live");		
 				}
 				else if(star.after(date))

@@ -35,6 +35,7 @@ public class Application {
 	{	SpringApplication.run(Application.class,args);
 	}
 	
+	
 	@Bean(name="multipartResolver")
 	public CommonsMultipartResolver multipartResolver()
 	{	CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
