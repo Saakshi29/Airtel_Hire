@@ -11,7 +11,6 @@ import springs.model.Problem;
 @Repository
 public interface ProblemRepository extends JpaRepository<Problem,Long>{
 
-
 	@Query("Select p from Problem p where p.cid=:cid")	
 	public List<Problem> findProb(@Param("cid") Long cid);
 		

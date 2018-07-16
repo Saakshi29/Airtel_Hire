@@ -2,7 +2,6 @@ package springs.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.validation.Valid;
 
@@ -11,22 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import springs.dao.EmployeeDAO;
 import springs.dao.QuestionnaireDAO;
 import springs.dao.ScoreDAO;
 import springs.dao.SubmissionDAO;
-import springs.model.Problem;
 import springs.model.Response_score;
 import springs.model.Score;
 import springs.model.ScoreOfSubjective;
@@ -36,17 +31,17 @@ import springs.model.subjectiveRequest;
 @RestController
 public class ScoreController {
 
-@Autowired
-ScoreDAO scoreDAO;
-
-@Autowired
-SubmissionDAO submissionDAO;
-
-@Autowired	
-EmployeeDAO employeeDAO;
-    
-@Autowired
-QuestionnaireDAO questionnaireDAO;
+	@Autowired
+	ScoreDAO scoreDAO;
+	
+	@Autowired
+	SubmissionDAO submissionDAO;
+	
+	@Autowired	
+	EmployeeDAO employeeDAO;
+	    
+	@Autowired
+	QuestionnaireDAO questionnaireDAO;
 
 	@GetMapping("/score/{id}")
 	public List<Response_score> scoreByPid(@PathVariable(value="id") Long pid)

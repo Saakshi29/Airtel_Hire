@@ -6,17 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity()
 @Table(name="scoreboard")
 @EntityListeners(AuditingEntityListener.class)
 public class Score {
-
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -27,11 +22,8 @@ public class Score {
 	private Long id;
 	private Long questionnaireid;
 	private Long qid;
-
-
 	private Long score;
 	
-
 	public Long getQuestionnaireid() {
 		return questionnaireid;
 	}
@@ -72,7 +64,6 @@ public class Score {
 	public Long getScore() {
 		return score;
 	}
-
 	public void setScore(Long score) {
 		this.score = score;
 	}

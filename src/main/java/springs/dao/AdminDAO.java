@@ -1,18 +1,15 @@
 package springs.dao;
 
-import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import springs.model.Submission;
 import springs.repository.AdminRepository;
-import springs.repository.EmployeeRepository;
-import springs.repository.SubmissionRepository;
 
 @Service
 public class AdminDAO {
+	
 	@Autowired
 	AdminRepository adminRepository;
 
@@ -23,8 +20,7 @@ public class AdminDAO {
 	}
 
 	public String generatePassword()
-	{
-		int leftLimit = 97; // letter 'A'
+	{	int leftLimit = 97; // letter 'A'
 	    int rightLimit = 122; // letter 'z'
 	    int targetStringLength = 8;
 	    Random random = new Random();
@@ -37,6 +33,5 @@ public class AdminDAO {
 	    String generatedString = buffer.toString();
 	return generatedString;
 	}
-	
 	
 }

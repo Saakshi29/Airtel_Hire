@@ -5,11 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import springs.model.Employee;
 import springs.model.Questionnaire;
-import springs.model.Submission;
-import springs.repository.EmployeeRepository;
 import springs.repository.QuestionnaireRespository;
 
 @Service
@@ -17,7 +13,6 @@ public class QuestionnaireDAO {
 
 	@Autowired
 	QuestionnaireRespository questionnaireRepository;
-	
 	
 	public Questionnaire save(Questionnaire q)
 	{
@@ -28,14 +23,17 @@ public class QuestionnaireDAO {
 	{
 		return questionnaireRepository.find(qid);
 	}
+	
 	public String findAnswer(Long qid)
 	{
 		return questionnaireRepository.findAnswer(qid);
 	}
+	
 	public Long findMarks(Long qid)
 	{
 		return questionnaireRepository.findMarks(qid);
 	}
+	
 	public String statement(Long qid)
 	{	return questionnaireRepository.findStatement(qid);
 	}
@@ -47,12 +45,13 @@ public class QuestionnaireDAO {
 	
 	public ArrayList<Long> findAllQid(Long questionnaireid)
 	{return questionnaireRepository.findAllQid(questionnaireid);
-		
 	}
+	
 	public ArrayList<Questionnaire>getAll()
 	{
 		return questionnaireRepository.getAll();
 	}
+	
 	public Long getMarks(Long qid)
 	{
 		return questionnaireRepository.getMarks(qid);

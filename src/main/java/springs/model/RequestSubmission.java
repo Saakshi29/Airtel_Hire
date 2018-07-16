@@ -19,7 +19,6 @@ public class RequestSubmission {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public Long getQid() {
 		return qid;
 	}
@@ -32,7 +31,4 @@ public class RequestSubmission {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	
-	
-	
 }

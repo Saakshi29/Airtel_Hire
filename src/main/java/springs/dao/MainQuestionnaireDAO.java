@@ -9,7 +9,6 @@ import springs.repository.MainQuestionnaireRepository;
 
 @Service
 public class MainQuestionnaireDAO {
-
 	
 	@Autowired
 	MainQuestionnaireRepository mainQuestionnaireRepository;
@@ -23,6 +22,5 @@ public class MainQuestionnaireDAO {
 	{
 		return mainQuestionnaireRepository.findId(qname);
 	}
-
 	
 }

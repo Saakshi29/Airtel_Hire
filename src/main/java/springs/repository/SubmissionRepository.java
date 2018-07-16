@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.data.jpa.repository.JpaRepository;
-import springs.model.Score;
 import springs.model.Submission;
 
 @Repository
@@ -34,6 +32,5 @@ public interface SubmissionRepository extends JpaRepository<Submission,Long> {
 	
 	@Query("Select s.filename from Submission s where s.id=:id and s.pid=:pid")
 	public String findPath(@Param("id")Long id,@Param("pid")Long pid);
-	
 	
 }

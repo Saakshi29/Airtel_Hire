@@ -46,33 +46,29 @@ public class EmployeeController {
 		headers.add("Access-Control-Allow-Origin", "*");
 		headers.add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
 		employeeDaO.save(emp);
-		
-		
 		Response r=new Response();
 		r.setId(emp.getId());
 		r.setStatus("success");
 		return ResponseEntity.ok().headers(headers).body(r);
-
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<Response> find(@Valid @RequestBody Request r)
-	{Long id= employeeDaO.find(r.getEmailid(),r.getPassword());
-	String type=null;
-	if(id!=null)
-	type=employeeDaO.findType(id);
-	String status;
-	if(id!=null){
-	status="success";}
-	else
-	{
-		status="not valid";
-	}
-	Response t=new Response();
-	t.setType(type);
-	t.setId(id);
-	t.setStatus(status);
-	return ResponseEntity.ok().body(t);
+	{	Long id= employeeDaO.find(r.getEmailid(),r.getPassword());
+		String type=null;
+		if(id!=null)
+		type=employeeDaO.findType(id);
+		String status;
+		if(id!=null){
+		status="success";}
+		else
+		{status="not valid";
+		}
+		Response t=new Response();
+		t.setType(type);
+		t.setId(id);
+		t.setStatus(status);
+		return ResponseEntity.ok().body(t);
 	}
 	
 	//get all users
@@ -83,7 +79,7 @@ public class EmployeeController {
 	//get users by id
 	@GetMapping("/users/{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value="id") Long empid)
-	{Employee emp= employeeDaO.findOne(empid);
+	{	Employee emp= employeeDaO.findOne(empid);
 		if(emp==null)
 			return ResponseEntity.notFound().build();
 		HttpHeaders headers = new HttpHeaders();
@@ -98,19 +94,15 @@ public class EmployeeController {
 		{	Employee emp= employeeDaO.findOne(empid);
 			if(emp==null)
 				return ResponseEntity.notFound().build();
-			
 			if(collegename!=null)
 				emp.setCollegename(collegename);
-			
 			if(phone_number!=null)
 				emp.setPhone_number(phone_number);
 			if(resume!=null)
-			{ String ext= FilenameUtils.getExtension(rootLocation3+resume.getOriginalFilename());
-			
-				 storageService.resumeStore(resume,emp.getId(),ext);
-				 System.out.println(ext);
-				 emp.setResume(rootLocation3+"\\resume-"+emp.getId()+"."+ext);
-				 	
+			{ 	String ext= FilenameUtils.getExtension(rootLocation3+resume.getOriginalFilename());
+			 	storageService.resumeStore(resume,emp.getId(),ext);
+			 	System.out.println(ext);
+			 	emp.setResume(rootLocation3+"\\resume-"+emp.getId()+"."+ext); 	
 			}	
 			if(specialization!=null)		
 				emp.setSpecialization(specialization);
@@ -122,18 +114,15 @@ public class EmployeeController {
 			HttpHeaders headers = new HttpHeaders();
 		    headers.add("Access-Control-Allow-Origin", "*");
 	    	headers.add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");	
-	
-        	Response r=new Response();
+	       	Response r=new Response();
             r.setId(updatemployee.getId());
-  
-        	r.setStatus("success");
+         	r.setStatus("success");
         	return ResponseEntity.ok().headers(headers).body(r);
 	}
 	
 	@GetMapping("/resume/{id}")
 	public ResponseEntity<?> getResume(@PathVariable(value="id")Long id)throws IOException {
 		String p=employeeDaO.findPath(id);
-		
 		String filename="resume-"+id;
 		System.out.println(filename);
 		File file=new File(p);
@@ -146,10 +135,8 @@ public class EmployeeController {
 		java.nio.file.Path path=Paths.get(p);	
 		System.out.println(path);
 		ByteArrayResource resource =new ByteArrayResource(Files.readAllBytes((java.nio.file.Path) path));		
-		
 		return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(org.springframework.http.MediaType.parseMediaType("application/octet-stream")).body(resource);
-         
-    }
+     }
 	
 	
 	//delete

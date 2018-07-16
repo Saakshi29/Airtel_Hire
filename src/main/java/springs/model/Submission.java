@@ -17,7 +17,6 @@ public class Submission {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long subid;
-	
 	private Long id;
 	private Long pid;
 	String filename;
@@ -25,10 +24,8 @@ public class Submission {
 	String type;
 	String answer;
 	private Long qid;
-	
 	private Long questionnaireid;
 	
-
 	public Long getQuestionnaireid() {
 		return questionnaireid;
 	}

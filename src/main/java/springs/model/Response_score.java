@@ -2,13 +2,11 @@ package springs.model;
 
 public class Response_score {
 
-	
 	Long id;
 	String uname;
 	Long score;
 	boolean isfinal;
-	
-	
+		
 	public Long getId() {
 		return id;
 	}
@@ -38,7 +36,5 @@ public class Response_score {
 	}
 	public void setScore(Long score) {
 		this.score = score;
-	}
-	
-	
+	}	
 }

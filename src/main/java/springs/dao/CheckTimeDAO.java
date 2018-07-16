@@ -2,8 +2,6 @@ package springs.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import springs.model.Challenge;
 import springs.model.CheckTime;
 import springs.repository.CheckTimeRepository;
 
@@ -17,7 +15,6 @@ public class CheckTimeDAO {
 	{
 	  checkTimeRepository.save(c);
 	}
-	
 	
 	public Boolean checkk(Long id, Long cid)
 	{

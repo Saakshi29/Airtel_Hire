@@ -1,22 +1,12 @@
 package springs.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
 import javax.validation.Valid;
-
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -36,19 +26,16 @@ import springs.dao.StorageService;
 import springs.model.Challenge;
 import springs.model.status;
 
-
-
-
 @RestController
 public class ChallengesController {
 	
 	private final Path rootLocation2 = Paths.get("C:/challengeupload/");
-@Autowired
-ChallengeDAO challengeDAO;
+	@Autowired
+	ChallengeDAO challengeDAO;
+		
+	@Autowired
+	StorageService storageService;
 	
-@Autowired
-StorageService storageService;
-
 	@PostMapping("/challenges")
 	public ResponseEntity<status> createChallenge(@Valid @RequestParam(value="cname")String cname,@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate,@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("type") String type,@RequestParam("aboutChallenge") String aboutChallenge,@RequestParam("prizes") String prizes,@RequestParam("faqs") String faqs,
 			@RequestParam("guidelines")String guidelines,@RequestParam("banner") MultipartFile file)
@@ -62,47 +49,36 @@ StorageService storageService;
 		 challengeDAO.save(c);
 		 status s=new status();
 		 s.setStatus("success");
-		 return ResponseEntity.ok().body(s);
-		
+		 return ResponseEntity.ok().body(s);	
 	}
 	
 	
 	@GetMapping("/img/{cid}")
 	public ResponseEntity<?> getFile(@PathVariable(value="cid")Long cid)throws IOException {
-	
 		String p=challengeDAO.findPath(cid);
 		String filename="ch-"+cid.toString();
 		System.out.println(filename);
 		File file=new File(p);
 		
-		//Compression of image
-		/*
+		/*Compression of image
 		BufferedImage image = ImageIO.read(file);
-
-        File output = new File("C:/challengeupload/"+filenameCom);
+        File output = new File(p);
         OutputStream out = new FileOutputStream(output);
-
         ImageWriter writer =  ImageIO.getImageWritersByFormatName("jpg").next();
         ImageOutputStream ios = ImageIO.createImageOutputStream(out);
         writer.setOutput(ios);
-
         ImageWriteParam param = writer.getDefaultWriteParam();
         if (param.canWriteCompressed()){
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
             param.setCompressionQuality(0.05f);
         }
-
         writer.write(null, new IIOImage(image, null, null), param);
-
         out.close();
         ios.close();
         writer.dispose();
-		file=new File("C:/challengeupload/"+"filenameCom);
+		file=new File(p);
 		*/
 		
-		
-		//String ext=submissionDAO.findtype("C:/uploads/"+filename);
-		//System.out.println(ext);
 		HttpHeaders headers=new HttpHeaders();
 		headers.add("Cache-Control","no-cache,no-store,must-revalidate");
 		headers.add("Pragma","no-cache");
@@ -113,12 +89,8 @@ StorageService storageService;
 		System.out.println(path);
 		ByteArrayResource resource =new ByteArrayResource(Files.readAllBytes((java.nio.file.Path) path));		
 		return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(org.springframework.http.MediaType.parseMediaType("application/octet-stream")).body(resource);
-	
     }
 	
-	
-	
-
 	@GetMapping("/challenges")
 	public List<Challenge> getAllChallenges()
 	{return challengeDAO.findAll();}
@@ -129,7 +101,7 @@ StorageService storageService;
 		if(c==null)
 			return ResponseEntity.notFound().build();
 		
-		return ResponseEntity.ok().body(c);
+	return ResponseEntity.ok().body(c);
 	}
 	
 	@PutMapping("/challenges/{id}")
@@ -150,7 +122,6 @@ StorageService storageService;
 		c.setType(cDetails.getType());
 		c.setGuidelines(cDetails.getGuidelines());
 		c.setCategory(cDetails.getCategory());
-	
 	Challenge updatechallenge=challengeDAO.save(c);
 	return ResponseEntity.ok().body(updatechallenge);
 	}
@@ -163,29 +134,7 @@ StorageService storageService;
 		if(c==null)
 			return ResponseEntity.notFound().build();
 		challengeDAO.delete(c);
-		return ResponseEntity.ok().build();
+	return ResponseEntity.ok().build();
 	}
 	
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

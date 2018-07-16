@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import springs.model.Problem;
 import springs.model.Questionnaire;
 
 @Repository
@@ -29,7 +28,6 @@ public interface QuestionnaireRespository extends JpaRepository<Questionnaire,Lo
 	@Query("Select q.type from Questionnaire q where q.qid=:qid and q.questionnaireid=:questionnaireid")	
 	public String findType(@Param("qid") Long qid,@Param("questionnaireid")Long questionniareid);
 	
-
 	@Query("Select q.qid from Questionnaire q where q.questionnaireid=:questionnaireid and q.type='subjective'")	
 	public ArrayList<Long> findAllQid(@Param("questionnaireid") Long questionnaireid);
 	

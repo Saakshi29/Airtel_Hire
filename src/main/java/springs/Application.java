@@ -15,9 +15,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 @EnableJpaAuditing
 public class Application {
+
 	@Configuration
 	public class AppConfig extends WebMvcConfigurerAdapter {
-
 
 	    @Bean
 	    public WebMvcConfigurer corsConfigurer() {
@@ -30,16 +30,14 @@ public class Application {
 	        };
 	    }
 	}
+	
 	public static void main(String args[])
-	{
-		SpringApplication.run(Application.class,args);
-		
+	{	SpringApplication.run(Application.class,args);
 	}
 	
 	@Bean(name="multipartResolver")
 	public CommonsMultipartResolver multipartResolver()
-	{
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+	{	CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
 		multipartResolver.setMaxUploadSize(991111111);
 		return multipartResolver;
 	}
@@ -51,6 +49,5 @@ public class Application {
          filterRegistrationBean.addInitParameter("multipartResolverBeanName", "commonsMultipartResolver");
          return filterRegistrationBean;
      }
-
 	
 }

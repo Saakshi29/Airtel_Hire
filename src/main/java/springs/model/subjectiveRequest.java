@@ -8,9 +8,6 @@ public class subjectiveRequest {
 	String answer;
 	Long marks;
 	
-	
-	
-	
 	public Long getMarks() {
 		return marks;
 	}
@@ -41,6 +38,5 @@ public class subjectiveRequest {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	
-	
+
 }

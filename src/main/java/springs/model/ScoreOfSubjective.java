@@ -14,7 +14,6 @@ public class ScoreOfSubjective {
 	public Long getQid() {
 		return qid;
 	}
-	
 	public void setQid(Long qid) {
 		this.qid = qid;
 	}
@@ -24,8 +23,5 @@ public class ScoreOfSubjective {
 	public void setScore(Long score) {
 		this.score = score;
 	}
-	
-	
-	
-	
+
 }

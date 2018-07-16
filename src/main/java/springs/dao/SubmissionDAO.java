@@ -20,11 +20,11 @@ public class SubmissionDAO {
 		return submissionRepository.save(s);
 	}
 	
-	
 	public String findtype(String filename)
 	{
 		return submissionRepository.findOne(filename);
 	}
+	
 	public String findPath(Long id,Long pid)
 	{
 		return submissionRepository.findPath(id,pid);
@@ -39,17 +39,19 @@ public class SubmissionDAO {
 	{
 		return submissionRepository.findOnee(id,questionnaireid);
 	}
+	
 	public List<Submission> findSubmissions(Long pid)
 	{
 		return submissionRepository.findAll(pid);
 	}
+	
 	public ArrayList<Submission> sub(Long questionnaireid)
 	{
 		return submissionRepository.sub(questionnaireid);}
 		
-	
 	public String ans(Long id,Long qid)
 	{return submissionRepository.ans(id,qid);
 	}
+	
 }
 

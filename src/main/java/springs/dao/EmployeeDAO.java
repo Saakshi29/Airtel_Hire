@@ -16,8 +16,7 @@ public class EmployeeDAO {
 
 	public Long find(String username,String password)
 	{
-		return employeeRepository.find(username,password);
-			
+		return employeeRepository.find(username,password);			
 	}
 	
 	public String findPath(Long id)
@@ -35,12 +34,6 @@ public class EmployeeDAO {
 		return employeeRepository.save(emp);
 	}
 
-	/*public void fin(int id)
-	{
-		List<Integer> l=employeeRepository.fin(id);
-		for(int i=0;i<l.size();i++)
-			System.out.println(l.get(i));
-	}*/
 	//search
 	public List<Employee> findAll()
 	{
@@ -55,4 +48,4 @@ public class EmployeeDAO {
 	public void delete(Employee emp)
 	{
 		employeeRepository.delete(emp);}
-	}
+}

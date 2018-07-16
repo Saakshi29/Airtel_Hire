@@ -6,8 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -15,12 +13,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Challenge {
 	
-	public Challenge()
-	{}
+		public Challenge()
+		{}
 	
 		public Challenge(String cname, String startDate, String endDate, String startTime, String endTime,
-	  String type,String aboutChallenge, String prizes, String faqs,
-			String guidelines) {
+				String type,String aboutChallenge, String prizes, String faqs,
+				String guidelines) {
 		this.cname = cname;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -32,35 +30,25 @@ public class Challenge {
 		this.prizes = prizes;
 		this.faqs = faqs;
 		this.guidelines = guidelines;
-	}
+		}
+		
 		@Id
 		@GeneratedValue(strategy=GenerationType.AUTO)
 		private Long cid;
-
 		
 		private String cname;
-		
 		private String startDate;
-		
-		private String endDate;
-		
-		private String startTime;
-		
-		private String endTime;
-		
-		private String img;
-		
+		private String endDate;		
+		private String startTime;		
+		private String endTime;		
+		private String img;		
 		private String type;
-		
 		private String category;
-		
 		private String aboutChallenge;
-		
 		private String prizes;
-		
 		private String faqs;
-		
 		private String guidelines;
+
 		public Long getCid() {
 			return cid;
 		}
@@ -139,6 +127,4 @@ public class Challenge {
 		public void setGuidelines(String guidelines) {
 			this.guidelines = guidelines;
 		}
-
-
 }

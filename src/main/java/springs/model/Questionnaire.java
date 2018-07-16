@@ -25,8 +25,6 @@ public class Questionnaire {
 	private String answer;
 	private String qname;
 	
-	
-	
 	public String getQname() {
 		return qname;
 	}
@@ -76,9 +74,4 @@ public class Questionnaire {
 	public void setOptions(String options) {
 		this.options = options;
 	}
-	
-	
-
-	
-
 }

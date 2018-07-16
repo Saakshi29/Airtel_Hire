@@ -17,11 +17,10 @@ public class Admin {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long aid;
 
-
-	private String emailid;
-	
+	private String emailid;	
 	private String password;
 	private String aname;
+	
 	public Long getAid() {
 		return aid;
 	}
@@ -46,7 +45,4 @@ public class Admin {
 	public void setAname(String aname) {
 		this.aname = aname;
 	}
-	
-	
-	
 }

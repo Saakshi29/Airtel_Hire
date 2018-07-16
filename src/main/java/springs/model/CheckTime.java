@@ -12,7 +12,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class CheckTime {
 	
-	
 	@Id
 	Long id;
 	Long cid;
@@ -36,6 +35,4 @@ public class CheckTime {
 		this.hasstarted = hasstarted;
 	}
 	
-	
-
 }

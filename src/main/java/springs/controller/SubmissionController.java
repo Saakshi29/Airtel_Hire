@@ -7,11 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.apache.commons.io.FilenameUtils;
-import org.apache.tomcat.jni.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -23,18 +20,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import springs.dao.QuestionnaireDAO;
 import springs.dao.ScoreDAO;
 import springs.dao.StorageService;
 import springs.dao.SubmissionDAO;
-import springs.model.Challenge;
 import springs.model.RequestSubmission;
-import springs.model.Response_score;
 import springs.model.Score;
 import springs.model.Submission;
 import springs.model.status;
-import springs.model.subjectiveRequest;
 
 @RestController
 public class SubmissionController {
@@ -59,7 +52,7 @@ public class SubmissionController {
 		//String filename=id+"-"+pid;
 		System.out.println(filename);
 		File file=new File(filename);
-	//	String ext=submissionDAO.findtype("C:/uploads/"+filename);
+		//String ext=submissionDAO.findtype("C:/uploads/"+filename);
 		//System.out.println(ext);
 		HttpHeaders headers=new HttpHeaders();
 		headers.add("Cache-Control","no-cache,no-store,must-revalidate");
@@ -79,10 +72,9 @@ public class SubmissionController {
 
 	@PostMapping("/submission")
 	public ResponseEntity<status> addSubmission(@Valid @RequestParam("id") Long id,@RequestParam("pid") Long pid, @RequestParam(value="file") MultipartFile file)
-	{    String ext= FilenameUtils.getExtension(rootLocation+file.getOriginalFilename());
+	{   String ext= FilenameUtils.getExtension(rootLocation+file.getOriginalFilename());
 		storageService.store(file,id,pid,ext);
-	  
-		Submission s=new Submission();
+	  	Submission s=new Submission();
 		 s.setId(id);
 		 s.setType("challenge");
 		 s.setPid(pid);
@@ -97,22 +89,17 @@ public class SubmissionController {
 	@PostMapping("/submissionFromQuestionnaire")
 	public ResponseEntity<status> addSubmissionOfQid(@Valid @RequestBody ArrayList<RequestSubmission> sub)
 	{	for(int i=0;i<sub.size();i++)
-	{
-		Submission s=new Submission();
-
+		{Submission s=new Submission();
 		 s.setId(sub.get(i).getId());
 		 s.setQuestionnaireid(sub.get(i).getQuestionnaireid());
 		 s.setQid(sub.get(i).getQid());
 		 s.setAnswer(sub.get(i).getAnswer());
 		 s.setType("questionnaire");
 		 submissionDAO.save(s);
-		 
-		 
-		String x="subjective";
+		//String x="subjective";
 		String answer=questionnaireDAO.findAnswer(sub.get(i).getQid()); 
 		Long marks=questionnaireDAO.findMarks(sub.get(i).getQid());
-		String type=questionnaireDAO.findType(sub.get(i).getQid(),sub.get(i).getQuestionnaireid());
-		
+		//String type=questionnaireDAO.findType(sub.get(i).getQid(),sub.get(i).getQuestionnaireid());
 		Score score=new Score();
 		if(answer!="")
 		{if(answer.equals(sub.get(i).getAnswer()))
@@ -122,16 +109,11 @@ public class SubmissionController {
 		{Long h=(long)0;
 		score.setScore(h);
 		}}
-		
-		
 		score.setId(sub.get(i).getId());
-		
 		score.setQid(sub.get(i).getQid());
 		score.setQuestionnaireid(sub.get(i).getQuestionnaireid());
-		
-		 scoreDAO.save(score);
-		 
-	}
+		scoreDAO.save(score);
+		}
 		 status s1=new status();
 		 s1.setStatus("success");
 		 return ResponseEntity.ok().body(s1);
@@ -154,10 +136,7 @@ public class SubmissionController {
 	
 	@GetMapping("/checksubmissionstatus/{id}/{questionnaireid}")
 	public ResponseEntity<status> isSubmit(@Valid @PathVariable("id")Long id,@PathVariable("questionnaireid")Long questionnaireid)
-	{
-		status s=new status();
-		//@RequestBody Score r,
-		//r.getId(),r.getQuestionnaireid()
+	{		status s=new status();
 			List<Long> y=submissionDAO.findStatus2(id,questionnaireid);
 			if(y.size()!=0)
 			s.setStatus("success");	
