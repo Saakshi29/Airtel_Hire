@@ -18,6 +18,7 @@ import springs.dao.ScoreDAO;
 import springs.dao.SubmissionDAO;
 import springs.model.Employee;
 import springs.model.Request;
+import springs.model.RequestLink;
 import springs.model.Response;
 import springs.model.Response_score;
 import springs.model.Submission;
@@ -44,8 +45,9 @@ public class AdminController {
 	//	public ResponseEntity<status> sendd(@RequestParam("uname")String uname,@RequestParam("emailid")String emailid,@RequestParam("link")String link)
 
 	@PostMapping("/sendmail")
-	public ResponseEntity<status> sendd(@RequestBody ArrayList<String> emailid,@RequestParam("link")String link)
-	{	
+	public ResponseEntity<status> sendd(@RequestBody RequestLink requestLink)
+	{	String link=requestLink.getLink();
+		ArrayList<String> emailid=requestLink.getEmails();
 		for(int i=0;i<emailid.size();i++){
 		String password=adminDao.generatePassword();
 		emailServiceImpl.sendSimpleMessage(emailid.get(i),"Questionnaire for Airtel", "Hey user"+","+"\npassword: "+password+"\nLink for Questionnaire: "+link+"\n\n\n\n"+"Regards,\n Airtel Hire");

@@ -28,6 +28,7 @@ springs\model\UpdateRequest.class
 springs\model\Submission.class
 springs\controller\QuestionnaireController.class
 springs\model\CheckTime.class
+springs\model\RequestLink.class
 springs\dao\ChallengeDAO.class
 springs\controller\EmployeeController.class
 springs\dao\ScoreDAO.class
